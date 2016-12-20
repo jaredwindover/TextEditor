@@ -2,14 +2,19 @@ import sys
 import msvcrt
 import time
 import copy
+import ctypes
+
 import console
 from cursor import Cursor
+from additional_wintypes import STD_OUTPUT_HANDLE, BACKGROUND_BLUE
 
 class Keys:
     LeftArrow = b'K'
     RightArrow = b'M'
     UpArrow = b'H'
     DownArrow = b'P'
+
+std_out_handle = ctypes.windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
 
 def draw(contents, cursor):
     cursorBuffer = copy.deepcopy(cursor)
@@ -21,7 +26,7 @@ def draw(contents, cursor):
         for j in range(len(line)):
             c = line[j]
             if i == cursorBuffer.y and j == cursorBuffer.x:
-                with console.state(console.BACKGROUND_BLUE):
+                with console.state(std_out_handle, BACKGROUND_BLUE):
                     print(c,end="", flush=True)
             else:
                 print(c,end="", flush=True)
