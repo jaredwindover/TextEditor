@@ -6,6 +6,9 @@ class Cursor:
     def __str__(self):
         return "({},{})".format(self.x, self.y)
 
+    def __repr__(self):
+        return str(self)
+
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.x == other.x and self.y == other.y
@@ -20,10 +23,10 @@ class Cursor:
         return hash((self.x,self.y))
 
     def MoveLeft(self, contents):
-        self.x = max(0, min(self.x - 1, len(contents[self.y]) - 1))
+        self.x = max(0, self.x - 1)
 
     def MoveRight(self, contents):
-        self.x = max(0, min(len(contents[self.y]) - 1, self.x + 1))
+        self.x = max(0, min(len(contents[self.y]), self.x + 1))
 
     def MoveUp(self, contents):
         self.y = max(0, self.y - 1)
